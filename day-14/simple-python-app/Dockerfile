@@ -8,10 +8,14 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the project dependencies
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code into the container
 COPY . .
+
+# Run as a non-root user
+RUN useradd --create-home appuser
+USER appuser
 
 # Expose the port the Flask application will be listening on
 EXPOSE 5000
